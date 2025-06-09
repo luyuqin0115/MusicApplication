@@ -1,3 +1,8 @@
+import { Find } from "./Find";
+import { Mine } from "./Mine";
+import { Moment } from "./Moment";
+import { Recommend } from "./Recommend";
+
 // 跳转页面入口函数
 @Builder
 export function LayoutBuilder() {
@@ -5,9 +10,10 @@ export function LayoutBuilder() {
 }
 
 interface TabClass {
-  text: string
-  icon: ResourceStr
+  text: string;
+  icon: ResourceStr;
 }
+
 @ComponentV2
 struct Layout {
   @Local currentIndex:number = 0;
@@ -26,10 +32,10 @@ struct Layout {
     Column({space:5}){
       Image(item.icon)
         .width(24)
-        .fillColor("#63AAAA")
+        .fillColor(this.currentIndex===index?"#E85A88":"#63AAAA")
       Text(item.text)
         .fontSize(14)
-        .fontColor("#63AAAA")
+        .fontColor(this.currentIndex===index?"#E85A88":"#63AAAA")
     }
     .justifyContent(FlexAlign.Center)
   }
@@ -39,7 +45,15 @@ struct Layout {
       Tabs({barPosition:BarPosition.End}){
         ForEach(this.tabData,(item:TabClass,index:number)=>{
           TabContent(){
-            Text("内容")
+            if (index===0) {
+              Recommend();
+            } else if (index===1) {
+              Find();
+            }else if (index===2) {
+              Moment();
+            }else if (index===3) {
+              Mine();
+            }
           }
           .tabBar(this.tabBuilder(item,index))
           .backgroundColor("#131215")
@@ -47,6 +61,9 @@ struct Layout {
         })
       }
       .backgroundColor("#3B3F42")
+      .onChange((index:number)=>{
+        this.currentIndex = index;
+      })
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     }
     // .title('layoutUI')

@@ -14,6 +14,14 @@
       "data": {
         "description" : "this is Layout page"
       }
+    },
+    {
+      "name": "Play",
+      "pageSourceFile": "src/main/ets/pages/Play.ets",
+      "buildFunction": "PlayBuilder",
+      "data": {
+        "description" : "this is play page"
+      }
     }
 
   ]
