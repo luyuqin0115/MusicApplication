@@ -2,6 +2,7 @@ import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.Ab
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { playerManager } from '../utils/AvPlayerManager';
+import { avSessionManager } from '../utils/AvSessionManager';
 
 const DOMAIN = 0x0000;
 
@@ -21,6 +22,7 @@ export default class EntryAbility extends UIAbility {
 
     //入口准备播放器
     playerManager.init();
+    avSessionManager.init(this.context)
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
         hilog.error(DOMAIN, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err));
@@ -31,6 +33,8 @@ export default class EntryAbility extends UIAbility {
   }
 
   onWindowStageDestroy(): void {
+    avSessionManager.destroy()
+    playerManager.release()
     // Main window is destroyed, release UI related resources
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageDestroy');
   }

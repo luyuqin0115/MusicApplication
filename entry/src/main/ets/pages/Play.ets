@@ -1,4 +1,7 @@
 import { SongItemType } from "../models/Music"
+import { AppStorageV2 } from "@kit.ArkUI";
+import { GlobalMusic } from "../models/GlobalMusic";
+import { playerManager } from "../utils/AvPlayerManager";
 
 // 跳转页面入口函数
 @Builder
@@ -128,8 +131,10 @@ struct Play {
     }
   ]
   // 当前播放的歌曲
+
+  // playState:SongItemType = this.songs[0]
   @Local
-  playState:SongItemType = this.songs[0]
+  playState:GlobalMusic=AppStorageV2.connect(GlobalMusic,'SONG_KEY',()=>new GlobalMusic())!
 
 
   @Builder
@@ -140,6 +145,9 @@ struct Play {
       .width(80)
       .height('100%')
       .type(ButtonType.Normal)
+      .onClick(()=>{
+        playerManager.removeSong(index,this.pathStack)
+      })
 
   }
 
@@ -285,20 +293,23 @@ struct Play {
               Column() {
                 // 进度条
                 Row({ space: 4 }) {
-                  Text("00:00")
+                  Text(this.number2time(this.playState.time))
                     .fontSize(12)
                     .fontColor(Color.White)
                   Slider({
                     value: 0,
                     min: 0,
-                    max: 0
+                    max: this.playState.duration
                   })
                     .layoutWeight(1)
                     .blockColor(Color.White)
                     .selectedColor(Color.White)
                     .trackColor('#ccc5c5c5')
                     .trackThickness(2)
-                  Text("00:00")
+                    .onChange((value)=>{
+                      playerManager.seekPlay(value)
+                    })
+                  Text(this.number2time(this.playState.duration))
                     .fontSize(12)
                     .fontColor(Color.White)
                 }
@@ -306,22 +317,50 @@ struct Play {
                 .padding(24)
                 // 切换
                 Row() {
-                  Image($r('app.media.ic_auto'))
-                    .fillColor(Color.White)
-                    .width(30)
+                  if (this.playState.playMode==="auto"){
+                    Image($r('app.media.ic_auto'))
+                      .fillColor(Color.White)
+                      .width(30)
+                      .onClick(()=>{
+                        this.playState.playMode="random"
+                      })
+                  }else if (this.playState.playMode==="random"){
+                    Image($r('app.media.ic_random'))
+                      .fillColor(Color.White)
+                      .width(30)
+                      .onClick(()=>{
+                        this.playState.playMode="repeat"
+                      })
+                  }else if (this.playState.playMode==="repeat"){
+                    Image($r('app.media.ic_repeat'))
+                      .fillColor(Color.White)
+                      .width(30)
+                      .onClick(()=>{
+                        this.playState.playMode="auto"
+                      })
+                  }
 
                   Image($r("app.media.ic_prev"))
                     .fillColor(Color.White)
                     .width(30)
+                    .onClick(()=>{
+                      playerManager.prevPlay()
+                    })
 
                   // 播放按钮
-                  Image($r('app.media.ic_paused'))
+                  Image(this.playState.isPlay?$r('app.media.ic_paused'):$r('app.media.ic_play'))
                     .fillColor(Color.White)
                     .width(50)
+                    .onClick(()=>{
+                      this.playState.isPlay?playerManager.paused():playerManager.singPlay(this.playState.playList[this.playState.playIndex])
+                    })
                   // 下一首
                   Image($r('app.media.ic_next'))
                     .fillColor(Color.White)
                     .width(30)
+                    .onClick(()=>{
+                      playerManager.nextPlay()
+                    })
                   // 播放列表
                   Image($r('app.media.ic_song_list'))
                     .fillColor(Color.White)
@@ -372,7 +411,7 @@ struct Play {
               .justifyContent(FlexAlign.Center)
 
               Row({ space: 8 }) {
-                Text(`播放列表 (0)`)
+                Text(`播放列表 (${this.playState.playList.length})`)
                   .fontColor(Color.White)
                   .fontSize(14)
               }
@@ -402,7 +441,7 @@ struct Play {
 
             // 播放列表
             List() {
-              ForEach(this.songs, (item: SongItemType, index: number) => {
+              ForEach(this.playState.playList, (item: SongItemType, index: number) => {
                 ListItem() {
                   Row() {
                     Row() {
@@ -436,6 +475,9 @@ struct Play {
                       .fillColor(Color.Gray)
                   }
                   .alignItems(VerticalAlign.Center)
+                  .onClick(()=>{
+                    playerManager.singPlay(item)
+                  })
                 }
                 .swipeAction({
                   end: this.deleteButton(index)
