@@ -249,9 +249,10 @@ export struct Moment {
               Row({ space: 24 }) {
                 // 分享
                 Row({ space: 4 }) {
-                  Text("↗")
-                    .fontSize(14)
-                    .fontColor("#888")
+                  Image($r("app.media.ic_share"))
+                    .width(16)
+                    .height(16)
+                    .fillColor("#888")
                   Text("分享")
                     .fontSize(12)
                     .fontColor("#888")
@@ -259,9 +260,10 @@ export struct Moment {
 
                 // 评论
                 Row({ space: 4 }) {
-                  Text("💬")
-                    .fontSize(14)
-                    .fontColor("#888")
+                  Image($r("app.media.ic_comment_o"))
+                    .width(16)
+                    .height(16)
+                    .fillColor("#888")
                   Text(moment.comment.toString())
                     .fontSize(12)
                     .fontColor("#888")
@@ -269,9 +271,10 @@ export struct Moment {
 
                 // 点赞
                 Row({ space: 4 }) {
-                  Text("♥")
-                    .fontSize(14)
-                    .fontColor("#888")
+                  Image($r("app.media.ic_like"))
+                    .width(16)
+                    .height(16)
+                    .fillColor("#888")
                   Text(moment.like.toString())
                     .fontSize(12)
                     .fontColor("#888")
