@@ -5,86 +5,86 @@ export struct Mine {
       // 上部分：图片区域 - 占70%高度
       Stack() {
         // 背景图片网格
-        Column() {
+        Column({ space: 10 }) {
           // 第一行专辑封面
-          Row() {
+          Row({ space: 10 }) {
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/0.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/1.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/2.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/3.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
           }
           .width('100%')
 
           // 第二行专辑封面
-          Row() {
+          Row({ space: 10 }) {
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/4.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/5.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/6.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/7.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
           }
           .width('100%')
 
           // 第三行专辑封面
-          Row() {
+          Row({ space: 10 }) {
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/8.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/9.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/10.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/11.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
           }
           .width('100%')
 
           // 第四行专辑封面
-          Row() {
+          Row({ space: 10 }) {
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/12.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/13.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/14.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
             Image('http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/15.jpg')
-              .width('25%')
+              .layoutWeight(1)
               .aspectRatio(1)
               .objectFit(ImageFit.Cover)
           }
@@ -93,6 +93,7 @@ export struct Mine {
         .width('100%')
         .height('100%')
         .opacity(0.6)
+        .padding(10)
 
         // Logo - 位于底部居中
         Text("♪")
@@ -101,8 +102,8 @@ export struct Mine {
           .fontWeight(FontWeight.Bold)
       }
       .width('100%')
-      .height('70%')
-      .alignContent(Alignment.BottomCenter)
+      .layoutWeight(7)
+      .alignContent(Alignment.Bottom)
       .backgroundColor("#000")
 
       // 下部分：介绍区域 - 占30%高度
@@ -151,13 +152,13 @@ export struct Mine {
           .alignItems(HorizontalAlign.Center)
 
           Column({ space: 4 }) {
-            Text("获赞")
-              .fontSize(12)
-              .fontColor("#999")
             Text("8万")
               .fontSize(18)
               .fontColor("#fff")
               .fontWeight(FontWeight.Bold)
+            Text("获赞")
+              .fontSize(12)
+              .fontColor("#999")
           }
           .alignItems(HorizontalAlign.Center)
         }
@@ -165,7 +166,7 @@ export struct Mine {
         .width('100%')
       }
       .width('100%')
-      .height('30%')
+      .layoutWeight(3)
       .backgroundColor("#000")
       .alignItems(HorizontalAlign.Center)
       .justifyContent(FlexAlign.Start)
